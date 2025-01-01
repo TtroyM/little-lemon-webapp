@@ -2,37 +2,211 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+selector {
+  display: flex;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Header */
+.header {
+  background-color: white;
+  min-height: 10vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: space-between;
   font-size: calc(10px + 2vmin);
   color: white;
+  padding: 0 10px;
 }
 
-.App-link {
-  color: #61dafb;
+
+.header img {
+  height: 50px;
+  pointer-events: none;
+  margin-left: auto;
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.header button {
+  background-color: #F4CE14;
+  color: #495E57;
+  border: none;
+  padding: 10px 20px;
+  font-size: 30px;
+  cursor: pointer;
+  border-radius: 90px;
+  font-weight: bold;
+  align-self: flex-end;
+  margin-right: auto;
+}
+
+/* Main Content */
+.main section {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+.main p {
+  font-size: 40px;
+  margin: 0;
+}
+
+.main img {
+  max-width: 100%;
+  height: auto;
+  margin-right: auto;
+  border-radius: 16px;
+  border: 3px solid #495E57;
+}
+
+.form-section {
+  flex: 1;
+  text-align: center;
+  margin-bottom: auto;
+}
+
+.form-section h2 {
+  font-size: 50px;
+  margin: 0;
+  margin-bottom: 50px;
+}
+
+.form-section p {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+/* Reservation Form */
+.reserve-form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 100px;
+  align-items: center;
+}
+
+.radio-group {
+  grid-column: span;
+  display: flex;
+  justify-content: start;
+  gap: 20px;
+}
+
+.radio-group label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: 120px;
+  margin-top: 20px;
+  font-size: 25px;
+}
+
+label {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+input[type="radio"] {
+  margin: 0 20px;
+  transform: scale(2);
+}
+
+input,
+select {
+  width: 100%;
+  padding: 10px;
+  font-size: 20px;
+  border: 1px solid #495E57;
+  border-radius: 5px;
+}
+
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.form-row label {
+  flex: 0 0 100px;
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.form-row input,
+.form-row select {
+  flex: 1;
+}
+
+button {
+  grid-column: span 2;
+  justify-self: end;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #495E57;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 30px;
+}
+
+button:hover {
+  background-color: #F4CE14;
+}
+
+.fields-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  max-width: 500px;
+}
+
+.footer {
+  background-color: #282c34;
+  height: 8vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  text-align: right;
+}
+
+/* Nav Bar */
+.nav {
+  background-color: white;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.nav ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav li {
+  margin-right: 20px;
+  font-size: 30px;
+}
+
+.nav a {
+  text-decoration: none;
+  color: #495E57;
+}
+
+.nav a:hover {
+  color: #F4CE14;
 }

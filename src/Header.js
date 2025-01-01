@@ -2,9 +2,11 @@ import logo from './assets/little-lemon-photos/logo.jpg';
 
 function Header() {
   return (
-    <header>
+    <header className='header'>
+      <button className='back-button' onClick={() => window.history.back()}>
+        &larr;
+      </button>
       <img src={logo} alt="logo" />
-      <h1>Little Lemon</h1>
     </header>
   );
 }
