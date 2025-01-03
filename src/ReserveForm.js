@@ -1,4 +1,6 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { initializeTimes, updateTimes } from './reserveAPI';
 
 const ReserveForm = () => {
   const [indoorOutdoor, setIndoorOutdoor] = useState('indoor');
@@ -6,92 +8,70 @@ const ReserveForm = () => {
   const [time, setTime] = useState('');
   const [guests, setGuests] = useState('2');
 
+  // Fetch available times from the API
+  const [availableTimes, setAvailableTimes] = useState([]);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchInitialTimes = async () => {
+      const times = await initializeTimes();
+      setAvailableTimes(times);
+    };
+    fetchInitialTimes();
+  }, []);
+
   const handleIndoorOutdoorChange = (e) => {
     setIndoorOutdoor(e.target.value);
   };
 
-  const handleDateChange = (e) => {
-    setDate(e.target.value);
+  const handleDateChange = async (e) => {
+    const selectedDate = e.target.value;
+    setDate(selectedDate);
+
+    const updatedTimes = await updateTimes(selectedDate);
+    setAvailableTimes(updatedTimes);
   };
 
-  const handleTimeChange = (e) => {
-    setTime(e.target.value);
-  };
-
-  const handleGuestsChange = (e) => {
-    setGuests(e.target.value);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Handle form submission logic here
   };
 
   return (
-    <form className='reserve-form'>
-      {/*Radio buttons for indoor/outdoor selection*/}
-      <div className='radio-group'>
+    <form className="reserve-form" onSubmit={handleSubmit}>
       <label>
-      <input
-        type="radio"
-        id="indoor"
-        name="indoorOutdoor"
-        value="indoor"
-        checked={indoorOutdoor === 'indoor'}
-        onChange={handleIndoorOutdoorChange}
-      />
-      Indoor
-      </label>
-      <label>
-      <input
-        type="radio"
-        id="outdoor"
-        name="indoorOutdoor"
-        value="outdoor"
-        checked={indoorOutdoor === 'outdoor'}
-        onChange={handleIndoorOutdoorChange}
-      />
-      Outdoor
-      </label>
-    </div>
-
-    {/*Date, time, and guests input fields*/}
-    <div className ='form-row'>
-      <label htmlFor="date">Date</label>
-      <input
-        type="date"
-        id="date"
-        name="date"
-        value={date}
-        onChange={handleDateChange}
-      />
-    </div>
-
-      {/*Time input field*/}
-      <div className ='form-row'>
-        <label htmlFor="time">Time</label>
-        <input
-          type="time"
-          id="time"
-          name="time"
-          value={time}
-          onChange={handleTimeChange}
-        />
-      </div>
-
-      {/*Guests dropdown*/}
-      <div className ='form-row'>
-        <label htmlFor="guests">Guests</label>
-        <select
-            id="guests"
-            name="guests"
-            value={guests}
-            onChange={handleGuestsChange}
-          >
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5+</option>
+        Indoor/Outdoor:
+        <select value={indoorOutdoor} onChange={handleIndoorOutdoorChange}>
+          <option value="indoor">Indoor</option>
+          <option value="outdoor">Outdoor</option>
         </select>
-      </div>
-
-      <button type="submit">Submit</button>
+      </label>
+      <label>
+        Date:
+        <input type="date" value={date} onChange={handleDateChange} />
+      </label>
+      <label>
+        Time:
+        <select value={time} onChange={(e) => setTime(e.target.value)}>
+          {availableTimes.map((time) => (
+            <option key={time} value={time}>
+              {time}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label>
+        Number of Guests:
+        <input
+          type="number"
+          value={guests}
+          onChange={(e) => setGuests(e.target.value)}
+          min="1"
+          max="20"
+        />
+      </label>
+      <button type="submit">Reserve</button>
     </form>
   );
 };

@@ -1,5 +1,8 @@
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import reserve from './assets/little-lemon-photos/reserve.jpg';
 import ReserveForm from './ReserveForm';
+import {submitAPI} from './reserveAPI';
 
 function Main() {
   return (
@@ -15,5 +18,32 @@ function Main() {
   </main>
   );
 }
+
+function submitForm() {
+  const form = document.querySelector('.reserve-form');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+    try {
+      const response = await fetch('https://api.example.com/reserve', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      if (response.ok) {
+        window.location.href = '/confirmed';
+      } else {
+        console.error('Reservation failed');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', submitForm);
 
 export default Main;
